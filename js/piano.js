@@ -38,13 +38,6 @@ function PianoController () {
                 isPressed = false;
             }, 500);
         }
-
-    };
-    this.startGame = function () {
-        $('.startPianoGame').hide();
-        $('.endPianoGame').hide();
-        $('.notePianoGame').show();
-        setViewNextRound(oPianoGame.startGame(10, oNoteAllList));
     };
     init();
 }

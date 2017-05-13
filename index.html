@@ -1,34 +1,56 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8"/>
-	<title>Maestro</title>
-	<link href="css/bootstrap.css" rel="stylesheet">
-	<link href="css/piano.css" rel="stylesheet">
-</head>
-<body >
-<div class="container">
-	<div class="col-sm-12">
-		<div class="piano">
-			<div class="pianoBody">
-				<div class="octave">
-					<div id="white1" class="key white success"></div>
-					<div id="white2" class="key white"></div>
-					<div id="white3" class="key white"></div>
-					<div id="white4" class="key white"></div>
-					<div class="flats">
-						<div id="black1" class="key black"></div>
-						<div id="black2" class="key black"></div>
-						<div id="black3" class="key black"></div>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Maestro</title>
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/piano.css" rel="stylesheet">
+	</head>
+
+	<body>
+
+		<h1 class="text-center">Vivaldi !</h1>
+		<center>
+		<div class="container row">
+
+			<div class="col-sm-12 col-md-8" >
+				<div class="piano">
+					<div class="pianoBody">
+						<div class="octave">
+							<div id="white1" class="key white success"></div>
+							<div id="white2" class="key white"></div>
+							<div id="white3" class="key white"></div>
+							<div id="white4" class="key white"></div>
+							<div class="flats">
+								<div id="black1" class="key black"></div>
+								<div id="black2" class="key black"></div>
+								<div id="black3" class="key black"></div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	
-</div>
 
-</body>
+			<div class="col-sm-12 col-md-4" >
+
+				<select class="form-control" style="margin:20px auto;">
+					<option>Sélectionner une Chanson</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+				</select>
+
+				<button type="button" class="btn btn-primary btn-lg btn-block">Jouer</button>
+				<button type="button" class="btn btn-info btn-lg btn-block">Tutoriel</button>
+
+			</div>
+
+		</div>
+		</center>
+
+	</body>
 </html>
 <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -39,12 +61,6 @@ $(document).ready(function() {
 
 	$('.key').mousedown(function (evt){
 		oPianoControll.pressPianoBtn(this.id)
-	});
-	$('.startPianoGame .btn').click(function (e) {
-		oPianoControll.startGame();
-	});
-	$('.endPianoGame .btn').click(function () {
-		oPianoControll.startGame();
 	});
 });
 </script>

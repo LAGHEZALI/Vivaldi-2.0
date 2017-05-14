@@ -8,36 +8,94 @@ function PianoController () {
 
     var init = function () {
         oNoteAllList = new NoteAllList(soundPath);
-        oPianoGame = new PianoGame();
         oPianoSimple = new PianoSimple(oNoteAllList);
     };
 
     this.pressPianoBtn = function (buttonId) {
         var button = $('#' + buttonId);
-
-        if(isPressed && oPianoGame.isGameRunning())
-            return false;
+        var noteName = idToNote(buttonId);
+        var styles;
 
         isPressed = true;
         button.addClass('pressed');
+        $("#pianoInput").val(noteName);
 
-        if(oPianoGame.isGameRunning()){
-            new Audio(oPianoGame.getCurrentSound()).play();
-            setTimeout(function () {
-                if(oPianoGame.isCorrectPress(buttonId)){
-                    showSuccessPress(buttonId);
-                    oPianoGame.inkrementPoints();
-                }else{
-                    showErrPress(buttonId, oPianoGame.getCorrectPres());
-                }
-            },500);
-        }else {
+        styles = {
+            backgroundColor : "#FF0",
+            color: "#222"
+        };
+        $("#pianoInput").css( styles );
+        
+        new Audio(oPianoSimple.getNoteById(buttonId).soundUrl).play();
+        setTimeout(function () {
+            button.removeClass('pressed');
+            isPressed = false;
+
+            styles = {
+                backgroundColor : "#a62639",
+                color: "#CCC"
+            };
+            $("#pianoInput").css( styles );
+
+            $("#pianoInput").val("Tapez les touches AZERTYU pour Jouer");
+
+        }, 500);
+    };
+
+    this.pressPianoKey = function (event) {
+        
+        var keyCode = event.key;
+        var buttonId =  keyToId(keyCode);
+        var noteName = keyToNote(keyCode);
+        var styles;
+
+        if(buttonId != "invalid") {
+
+            var button = $('#' + buttonId);
+
+            isPressed = true;
+            button.addClass('pressed');
+            
+            $("#pianoInput").val(noteName);
+
+            styles = {
+                backgroundColor : "#FF0",
+                color: "#222"
+            };
+            $("#pianoInput").css( styles );
+            
             new Audio(oPianoSimple.getNoteById(buttonId).soundUrl).play();
             setTimeout(function () {
                 button.removeClass('pressed');
                 isPressed = false;
+                $("#pianoInput").val("Tapez les touches AZERTYU pour Jouer");
+               
+                styles = {
+                    backgroundColor : "#85ff9e",
+                    color: "#555"
+                };
+                $("#pianoInput").css( styles );
+			
             }, 500);
         }
+        else {
+            $("#pianoInput").val("Touche Invalide !");
+            styles = {
+                backgroundColor : "#F00",
+                color: "#FFF"
+            };
+            $("#pianoInput").css( styles );
+            
+            new Audio("./sound/error.mp3").play();
+            setTimeout(function () {
+                $("#pianoInput").val("Tapez les touches AZERTYU pour Jouer");
+                styles = {
+                    backgroundColor : "#85ff9e",
+                    color: "#555"
+                };
+                $("#pianoInput").css( styles );
+            }, 500);
+        }       
     };
     init();
 }
@@ -62,15 +120,6 @@ function PianoSimple(oNoteListAll) {
     };
 
     init(oNoteListAll);
-}
-
-function PianoGame() {
-    var gameRunning = false;
-    var noteList = [];
-
-    this.isGameRunning = function () {
-        return gameRunning;
-    };
 }
 
 function NoteAllList(soundFolder) {
@@ -106,4 +155,36 @@ function Note(name, buttonId, soundUrl){
     this.name = name;
     this.buttonId = buttonId;
     this.soundUrl = soundUrl;
+}
+
+function keyToId(key) {
+    if(key == 'A' || key == 'a')   return("white1");
+    else if(key == 'Z' || key == 'z')   return("black1");
+    else if(key == 'E' || key == 'e')   return("white2");
+    else if(key == 'R' || key == 'r')   return("black2");
+    else if(key == 'T' || key == 't')   return("white3");
+    else if(key == 'Y' || key == 'y')   return("black3");
+    else if(key == 'U' || key == 'u')   return("white4");
+    else return("invalid");
+}
+
+function keyToNote(key) {
+    if(key == 'A' || key == 'a')   return("Do");
+    else if(key == 'Z' || key == 'z')   return("Ré");
+    else if(key == 'E' || key == 'e')   return("Mi");
+    else if(key == 'R' || key == 'r')   return("Fa");
+    else if(key == 'T' || key == 't')   return("Sol");
+    else if(key == 'Y' || key == 'y')   return("La");
+    else if(key == 'U' || key == 'u')   return("Si");
+    else return("invalid");
+}
+
+function idToNote(id) {
+    if(id == 'white1')   return("Do");
+    else if(id == 'black1' )   return("Ré");
+    else if(id == 'white2' )   return("Mi");
+    else if(id == 'black2' )   return("Fa");
+    else if(id == 'white3' )   return("Sol");
+    else if(id == 'black3' )   return("La");
+    else if(id == 'white4' )   return("Si");
 }

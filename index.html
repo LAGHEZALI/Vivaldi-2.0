@@ -8,7 +8,7 @@
 		<link href="css/piano.css" rel="stylesheet">
 	</head>
 
-	<body>
+	<body onload="loadData()">
 
 		<h1 class="text-center">Vivaldi !</h1>
 		<center>
@@ -34,16 +34,14 @@
 
 			<div class="col-sm-12 col-md-4" >
 
-				<select class="form-control" style="margin:20px auto;">
+				<select id="listeChansons"  class="form-control text-center" style="margin:20px auto;">
 					<option>Sélectionner une Chanson</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-					<option>5</option>
 				</select>
 
 				<button type="button" class="btn btn-primary btn-lg btn-block">Jouer</button>
 				<button type="button" class="btn btn-info btn-lg btn-block">Tutoriel</button>
+				<input type="text" id="pianoInput" class="form-control text-center" style="margin:20px auto;" 
+					value="Cliquer Ici pour jouer avec Clavier" readonly>
 
 			</div>
 
@@ -52,15 +50,42 @@
 
 	</body>
 </html>
+
 <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/piano.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-	var oPianoControll = new PianoController();
 
-	$('.key').mousedown(function (evt){
-		oPianoControll.pressPianoBtn(this.id)
+<script type="text/javascript" src="js/loadData.js"></script>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var oPianoControll = new PianoController();
+
+		$('.key').mousedown(function (evt){
+			oPianoControll.pressPianoBtn(this.id)
+		});
+
+		$( "#pianoInput" ).keypress(function( event ) {
+			oPianoControll.pressPianoKey(event);
+		});
+
+		$( "#pianoInput" ).focus(function() {
+			var styles = {
+				backgroundColor : "#85ff9e",
+				color: "#555"
+			};
+			$("#pianoInput").css( styles );
+			$("#pianoInput").val("Tapez les touches AZERTYU pour Jouer");
+		});
+
+		$( "#pianoInput" ).blur(function() {
+			var styles = {
+				backgroundColor : "#a62639",
+				color: "#CCC"
+			};
+			$("#pianoInput").css( styles );
+			$("#pianoInput").val("Cliquer Ici pour jouer avec Clavier");
+		});
 	});
-});
 </script>

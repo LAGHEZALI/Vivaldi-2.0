@@ -80,11 +80,11 @@ div.flats :nth-child(3) {
 div.white.pressed
 {
     border: 1px solid #343434;
-    background-image: -webkit-gradient(center bottom , #FFFFFF 90%, #CCCCCC 100%);
+    background-image: -webkit-gradient(center bottom , #FF0 90%, #DD0 100%);
     -webkit-box-shadow: 0 -5px 20px -3px #272927 inset;
-    background-image: -moz-linear-gradient(center bottom , #FFFFFF 90%, #CCCCCC 100%);
+    background-image: -moz-linear-gradient(center bottom , #FF0 90%, #DD0 100%);
     -moz-box-shadow: 0 -5px 2px 0px #838383 inset,0 -3px 20px -3px #272927 inset;
-    background-image: -gradient(center bottom , #FFFFFF 90%, #CCCCCC 100%);
+    background-image: -gradient(center bottom , #FF0 90%, #DD0 100%);
     box-shadow: 0 -5px 20px -3px #272927 inset;
 }
 div.white.pressed.error
@@ -99,9 +99,13 @@ div.black.pressed
 {
     border: 1px solid #CECECE;
     border-top: 1px solid #626262;
-    -moz-box-shadow: 0 0 6px 7px #303030 inset, 0 -5px #F7F7F7 inset;
-    -webkit-box-shadow: 0 0 6px 7px #303030 inset, 0 -5px #F7F7F7 inset;
-    box-shadow: 0 0 6px 7px #303030 inset, 0 -5px #F7F7F7 inset;
+    border: 1px solid #343434;
+    background-image: -webkit-gradient(center bottom , #AA0 90%, #880 100%);
+    -webkit-box-shadow: 0 -5px 20px -3px #272927 inset;
+    background-image: -moz-linear-gradient(center bottom , #AA0 90%, #880 100%);
+    -moz-box-shadow: 0 -5px 2px 0px #838383 inset,0 -3px 20px -3px #272927 inset;
+    background-image: -gradient(center bottom , #AA0 90%, #880 100%);
+    box-shadow: 0 0 6px 7px #550 inset, 0 -5px #550 inset;
 }
 div.black.pressed.error
 {
@@ -110,4 +114,11 @@ div.black.pressed.error
 div.black.pressed.success
 {
     background-color: green;
+}
+
+
+#pianoInput {
+    background-color: #a62639;
+    color: #CCC;
+    cursor: pointer;
 }

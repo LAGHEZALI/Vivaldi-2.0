@@ -38,8 +38,8 @@
 					<option>Sélectionner une Chanson</option>
 				</select>
 
-				<button type="button" class="btn btn-primary btn-lg btn-block">Jouer</button>
-				<button type="button" class="btn btn-info btn-lg btn-block">Tutoriel</button>
+				<button id="playBtn" type="button" class="btn btn-primary btn-lg btn-block">Jouer</button>
+				<button id="tutoBtn" type="button" class="btn btn-info btn-lg btn-block">Tutoriel</button>
 				<input type="text" id="pianoInput" class="form-control text-center" style="margin:20px auto;" 
 					value="Cliquer Ici pour jouer avec Clavier" readonly>
 
@@ -56,11 +56,16 @@
 <script type="text/javascript" src="js/piano.js"></script>
 
 <script type="text/javascript" src="js/loadData.js"></script>
+<script type="text/javascript" src="js/play.js"></script>
 
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		var oPianoControll = new PianoController();
+
+		$( "#playBtn" ).click(function() {
+			demoPlay(oPianoControll);
+		});
 
 		$('.key').mousedown(function (evt){
 			oPianoControll.pressPianoBtn(this.id)

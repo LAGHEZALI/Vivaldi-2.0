@@ -1,4 +1,4 @@
-function demoPlay(oPianoControll) {
+function demoPlayStart(oPianoControll) {
 
     var selectedMusic = document.getElementById("listeChansons");
     var idMusic = selectedMusic.options[selectedMusic.selectedIndex].value;
@@ -13,27 +13,45 @@ function demoPlay(oPianoControll) {
                 for (i in data) {
                     if( idMusic == data[i].id ) {
 
+                            $("#listeChansons").removeClass('listeChansons');
+                            $("#listeChansons").addClass('listeChansons-play');
+                            
+                            $("#playBtn").text("Arrêter la Lecture");
+                            document.getElementById('tutoBtn').disabled = true;
+
+                            oPianoControll.mode="play";
+
                             var j = 0; 
                             //  create a loop function
                             function myLoop () {     
                                 //  call a 3s setTimeout when the loop is called      
                                 setTimeout(function () { 
+
+                                    if( oPianoControll.mode != "play" ) {
+                                        j = data[i].notes.length;
+                                    }
                                     //  your code here   
-                                    oPianoControll.pressPianoBtn( conv( data[i].notes[j].nomNote ) );
+                                    if(data[i].notes[j] != undefined) {
+                                        oPianoControll.pressPianoBtn( conv( data[i].notes[j].nomNote ) );
+                                    }
                                     //  increment the counter         
                                     j++;            
                                     //  if the counter < 10, call the loop function         
                                     if (j < data[i].notes.length) {    
                                         //  ..  again which will trigger another         
                                         myLoop();             //  ..  again which will trigger another 
+                                    }
+                                    else
+                                    {
+                                        $("#playBtn").text("Jouer");
+                                        document.getElementById('tutoBtn').disabled = false;
+                                        $("#listeChansons").removeClass('listeChansons-play');
+                                        $("#listeChansons").addClass('listeChansons');
                                     }   
                                 //  ..  setTimeout()   
-                                },data[i].notes[j].Silence )
+                                },data[i].notes[j].Silence)
                             }
-                            myLoop();  
-                            
-                            
-
+                            myLoop();
                     }
                 }
             }
@@ -41,6 +59,15 @@ function demoPlay(oPianoControll) {
     };
     xmlhttp.open("GET", "./json/chansons.json", true);
     xmlhttp.send();
+}
+
+function demoPlayStop(oPianoControll) {
+
+    oPianoControll.mode="libre";
+    $("#playBtn").text("Jouer");
+    document.getElementById('tutoBtn').disabled = false;
+    $("#listeChansons").removeClass('listeChansons-play');
+    $("#listeChansons").addClass('listeChansons');
 }
 
 function conv(note) {
@@ -52,3 +79,4 @@ function conv(note) {
     else if(note == "La") return ("black3");
     else if(note == "Si") return ("white4");
 }
+

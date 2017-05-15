@@ -1,3 +1,7 @@
+body {
+    background-color: #5f4842;
+}
+
 .piano {
     background-color: #272927;
     color: #000000;
@@ -87,6 +91,17 @@ div.white.pressed
     background-image: -gradient(center bottom , #FF0 90%, #DD0 100%);
     box-shadow: 0 -5px 20px -3px #272927 inset;
 }
+
+div.white.next
+{
+    border: 1px solid #343434;
+    background-image: -webkit-gradient(center bottom , #09f 90%, #09f 100%);
+    -webkit-box-shadow: 0 -5px 20px -3px #272927 inset;
+    background-image: -moz-linear-gradient(center bottom , #09f 90%, #09f 100%);
+    -moz-box-shadow: 0 -5px 2px 0px #838383 inset,0 -3px 20px -3px #272927 inset;
+    background-image: -gradient(center bottom , #09f 90%, #09f 100%);
+    box-shadow: 0 -5px 20px -3px #272927 inset;
+}
 div.white.pressed.error
 {
     background-color: red;
@@ -94,6 +109,10 @@ div.white.pressed.error
 div.white.pressed.success
 {
     background-color: green;
+}
+.next
+{
+    background-color: #09f;
 }
 div.black.pressed
 {
@@ -121,4 +140,29 @@ div.black.pressed.success
     background-color: #a62639;
     color: #CCC;
     cursor: pointer;
+}
+
+.listeChansons{
+    background-color: white;
+}
+
+.listeChansons-play{
+    background-color: yellow;
+}
+
+.whiteNoteName{
+    color: black;
+    position: relative;
+    top: 260px;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.blackNoteName{
+    color: white;
+    position: relative;
+    top: 160px;
+    right: 6px;
+    font-size: 1.5em;
+    font-weight: bold;
 }

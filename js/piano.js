@@ -6,38 +6,55 @@ function PianoController () {
     var isPressed = false;
     var soundPath = "./sound";
 
+    this.mode="libre";
+    this.monTuto;
+
     var init = function () {
         oNoteAllList = new NoteAllList(soundPath);
         oPianoSimple = new PianoSimple(oNoteAllList);
     };
 
+    this.nextNote = function() {
+
+        // fin tuto
+        if( this.mode=="tuto" && this.monTuto.iter == this.monTuto.nbNotes) {
+            this.mode="libre";
+            $("#listeChansons").removeClass('listeChansons-play');
+            $("#listeChansons").addClass('listeChansons');
+            $("#tutoBtn").text("Tutotiel");
+            document.getElementById('playBtn').disabled = false;
+
+            $("#modalTitle").text("Mode Tutoriel");
+            $("#modalMsg").text("Bravo ! Vous avez fini votre chanson. Recommencez quand vous voulez...");
+            
+            $( '#btn-modal' ).click ();
+             new Audio("./sound/clap.mp3").play();
+        }
+        else {
+
+            var name = this.monTuto.tabNotes[this.monTuto.iter].nomNote;
+            buttonId = noteToId(name);
+
+            var btn = $('#' + buttonId);
+
+            btn.addClass('next');
+            this.monTuto.iter += 1 ;
+        }
+    };
+
     this.pressPianoBtn = function (buttonId) {
-        var button = $('#' + buttonId);
-        var noteName = idToNote(buttonId);
-        var styles;
+       
+        notePressed(buttonId,oPianoSimple);
 
-        isPressed = true;
-        button.addClass('pressed');
-        $("#pianoInput").val(noteName);
+        //  si on est on mode tuto et la touche et valide
+        if(this.mode=="tuto" && idToNote(buttonId)==this.monTuto.tabNotes[this.monTuto.iter-1].nomNote ){
 
-        styles = {
-            backgroundColor : "#FF0",
-            color: "#222"
-        };
-        $("#pianoInput").css( styles );
-        
-        new Audio(oPianoSimple.getNoteById(buttonId).soundUrl).play();
+            this.nextNote();
+        }
+
         setTimeout(function () {
-            button.removeClass('pressed');
-            isPressed = false;
-
-            styles = {
-                backgroundColor : "#a62639",
-                color: "#CCC"
-            };
-            $("#pianoInput").css( styles );
-
-            $("#pianoInput").val("Tapez les touches AZERTYU pour Jouer");
+            
+            noteReleased(buttonId,"Cliquez ici pour Jouer avec le Clavier","#a62639","#CCC");
 
         }, 500);
     };
@@ -46,35 +63,20 @@ function PianoController () {
         
         var keyCode = event.key;
         var buttonId =  keyToId(keyCode);
-        var noteName = keyToNote(keyCode);
-        var styles;
 
         if(buttonId != "invalid") {
 
-            var button = $('#' + buttonId);
+            notePressed(buttonId,oPianoSimple);
 
-            isPressed = true;
-            button.addClass('pressed');
-            
-            $("#pianoInput").val(noteName);
+            //  si on est on mode tuto et la touche et valide
+            if(this.mode=="tuto" && idToNote(buttonId)==this.monTuto.tabNotes[this.monTuto.iter-1].nomNote ){
 
-            styles = {
-                backgroundColor : "#FF0",
-                color: "#222"
-            };
-            $("#pianoInput").css( styles );
-            
-            new Audio(oPianoSimple.getNoteById(buttonId).soundUrl).play();
+                this.nextNote();
+            }
+
             setTimeout(function () {
-                button.removeClass('pressed');
-                isPressed = false;
-                $("#pianoInput").val("Tapez les touches AZERTYU pour Jouer");
-               
-                styles = {
-                    backgroundColor : "#85ff9e",
-                    color: "#555"
-                };
-                $("#pianoInput").css( styles );
+                
+                noteReleased(buttonId,"Tapez les touches AZERTYU pour Jouer","#85ff9e","#555")
 			
             }, 500);
         }
@@ -98,6 +100,42 @@ function PianoController () {
         }       
     };
     init();
+}
+
+function notePressed(buttonId,oPianoSimple) {
+
+        var button = $('#' + buttonId);
+        var noteName = idToNote(buttonId);
+        var styles;
+
+        isPressed = true;
+        button.removeClass('next');
+        button.addClass('pressed');
+        $("#pianoInput").val(noteName);
+
+        styles = {
+            backgroundColor : "#FF0",
+            color: "#222"
+        };
+        $("#pianoInput").css( styles );
+        
+        new Audio(oPianoSimple.getNoteById(buttonId).soundUrl).play();
+}
+
+function noteReleased(buttonId,msg,bg,fg) {
+
+        var button = $('#' + buttonId);
+
+        button.removeClass('pressed');
+        isPressed = false;
+
+        styles = {
+            backgroundColor : bg,
+            color: fg
+        };
+        $("#pianoInput").css( styles );
+
+        $("#pianoInput").val(msg);
 }
 
 function PianoSimple(oNoteListAll) {
@@ -157,6 +195,12 @@ function Note(name, buttonId, soundUrl){
     this.soundUrl = soundUrl;
 }
 
+function tutoObj(tabNotes) {
+    this.tabNotes   = tabNotes;
+    this.nbNotes    = tabNotes.length;
+    this.iter       = 0;
+}
+
 function keyToId(key) {
     if(key == 'A' || key == 'a')   return("white1");
     else if(key == 'Z' || key == 'z')   return("black1");
@@ -187,4 +231,14 @@ function idToNote(id) {
     else if(id == 'white3' )   return("Sol");
     else if(id == 'black3' )   return("La");
     else if(id == 'white4' )   return("Si");
+}
+
+function noteToId(note) {
+    if(note == 'Do')   return("white1");
+    else if(note == 'Ré' )   return("black1");
+    else if(note == 'Mi' )   return("white2");
+    else if(note == 'Fa' )   return("black2");
+    else if(note == 'Sol' )   return("white3");
+    else if(note == 'La' )   return("black3");
+    else if(note == 'Si' )   return("white4");
 }

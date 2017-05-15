@@ -33,6 +33,12 @@ function demoTutoStart(oPianoControll) {
                     }
                 }
             }
+            else {
+                //  Preparation modal
+                $("#modalTitle").text("Pas si Vite !");
+                $("#modalMsg").text("Choisissez une chanson de la liste déroulante d'abord !");
+                $( '#btn-modal' ).click ();
+            }
         }
     };
     xmlhttp.open("GET", "./json/chansons.json", true);

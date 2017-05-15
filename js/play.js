@@ -3,6 +3,8 @@ function demoPlayStart(oPianoControll) {
     var selectedMusic = document.getElementById("listeChansons");
     var idMusic = selectedMusic.options[selectedMusic.selectedIndex].value;
 
+    var x;
+
     var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 
@@ -12,6 +14,8 @@ function demoPlayStart(oPianoControll) {
             if( idMusic != -1 ) {
                 for (i in data) {
                     if( idMusic == data[i].id ) {
+
+                            x=data[i].id
 
                             $("#listeChansons").removeClass('listeChansons');
                             $("#listeChansons").addClass('listeChansons-play');
@@ -28,16 +32,16 @@ function demoPlayStart(oPianoControll) {
                                 setTimeout(function () { 
 
                                     if( oPianoControll.mode != "play" ) {
-                                        j = data[i].notes.length;
+                                        j = data[x].notes.length;
                                     }
                                     //  your code here   
-                                    if(data[i].notes[j] != undefined) {
-                                        oPianoControll.pressPianoBtn( conv( data[i].notes[j].nomNote ) );
+                                    if(data[x].notes[j] != undefined) {
+                                        oPianoControll.pressPianoBtn( conv( data[x].notes[j].nomNote ) );
                                     }
                                     //  increment the counter         
                                     j++;            
                                     //  if the counter < 10, call the loop function         
-                                    if (j < data[i].notes.length) {    
+                                    if (j < data[x].notes.length) {    
                                         //  ..  again which will trigger another         
                                         myLoop();             //  ..  again which will trigger another 
                                     }
@@ -49,11 +53,18 @@ function demoPlayStart(oPianoControll) {
                                         $("#listeChansons").addClass('listeChansons');
                                     }   
                                 //  ..  setTimeout()   
-                                },data[i].notes[j].Silence)
+                                },data[x].notes[j].Silence)
                             }
                             myLoop();
                     }
                 }
+            }
+            else {
+
+                //  Preparation modal
+                $("#modalTitle").text("Pas si Vite !");
+                $("#modalMsg").text("Choisissez une chanson de la liste déroulante d'abord !");
+                $( '#btn-modal' ).click ();
             }
         }
     };

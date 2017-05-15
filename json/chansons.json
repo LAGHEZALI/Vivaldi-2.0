@@ -3,19 +3,19 @@
         "id":0,
         "titre":"Row Row Row the Boat",
         "notes":[
-            { "nomNote":"Do", "Silence":10 },
-            { "nomNote":"Do", "Silence":20 },
-            { "nomNote":"Do", "Silence":10 },
-            { "nomNote":"Ré", "Silence":10 },
-            { "nomNote":"Mi", "Silence":20 },
-            { "nomNote":"Mi", "Silence":10 },
-            { "nomNote":"Ré", "Silence":10 },
-            { "nomNote":"Mi", "Silence":10 },
-            { "nomNote":"Fa", "Silence":10 },
-            { "nomNote":"Sol", "Silence":20},
-            { "nomNote":"Do", "Silence":10 },
-            { "nomNote":"Do", "Silence":10 },
-            { "nomNote":"Do", "Silence":10 },
+            { "nomNote":"Do", "Silence":500 },
+            { "nomNote":"Do", "Silence":500 },
+            { "nomNote":"Do", "Silence":500 },
+            { "nomNote":"Ré", "Silence":350 },
+            { "nomNote":"Mi", "Silence":300 },
+            { "nomNote":"Mi", "Silence":500 },
+            { "nomNote":"Ré", "Silence":400 },
+            { "nomNote":"Mi", "Silence":400 },
+            { "nomNote":"Fa", "Silence":400 },
+            { "nomNote":"Sol", "Silence":300},
+            { "nomNote":"Do", "Silence":500 },
+            { "nomNote":"Do", "Silence":500 },
+            { "nomNote":"Do", "Silence":500 },
             { "nomNote":"Sol", "Silence":500 },
             { "nomNote":"Sol", "Silence":500 },
             { "nomNote":"Sol", "Silence":500 },
@@ -127,6 +127,41 @@
             { "nomNote":"Ré", "Silence":600 },
             { "nomNote":"Ré", "Silence":700 },
             { "nomNote":"Do", "Silence":800 }
+        ]
+    },
+    {
+        "id":3,
+        "titre":"Happy BirthDay to You",
+        "notes":[
+            { "nomNote":"Do", "Silence":100 },
+            { "nomNote":"Do", "Silence":400 },
+            { "nomNote":"Ré", "Silence":200 },
+            { "nomNote":"Do", "Silence":400 },
+            { "nomNote":"Fa", "Silence":500 },
+            { "nomNote":"Mi", "Silence":400 },
+
+            { "nomNote":"Do", "Silence":800 },
+            { "nomNote":"Do", "Silence":400 },
+            { "nomNote":"Ré", "Silence":200 },
+            { "nomNote":"Do", "Silence":400 },
+            { "nomNote":"Sol", "Silence":500 },
+            { "nomNote":"Fa", "Silence":400 },
+
+            { "nomNote":"Do", "Silence":800 },
+            { "nomNote":"Do", "Silence":400 },
+            { "nomNote":"Si", "Silence":200 },
+            { "nomNote":"Fa", "Silence":400 },
+            { "nomNote":"Mi", "Silence":500 },
+            { "nomNote":"Mi", "Silence":400 },
+            { "nomNote":"Ré", "Silence":400 },
+
+            { "nomNote":"Si", "Silence":800 },
+            { "nomNote":"Si", "Silence":400 },
+            { "nomNote":"Si", "Silence":200 },
+            { "nomNote":"Mi", "Silence":400 },
+            { "nomNote":"Sol", "Silence":500 },
+            { "nomNote":"Fa", "Silence":400 }
+            
         ]
     }
 

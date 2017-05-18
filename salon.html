@@ -103,22 +103,37 @@
 
 	//	rotation loading
 	var rotation = function (){
-	$("#loading").rotate({
-		angle:0, 
-		animateTo:360, 
-		callback: rotation,
-		easing: function (x,t,b,c,d){        // t: current time, b: begInnIng value, c: change In value, d: duration
-			return c*(t/d)+b;
+		$("#loading").rotate({
+			angle:0, 
+			animateTo:360, 
+			callback: rotation,
+			easing: function (x,t,b,c,d){        // t: current time, b: begInnIng value, c: change In value, d: duration
+				return c*(t/d)+b;
+			}
+		});
 		}
-	});
-	}
-	rotation();
+		rotation();
+
+	var test=false;
+	var myVar;
 
 	//	copier presse-papier
 	document.getElementById("copyButton").addEventListener("click", function() {
-    copyToClipboard(document.getElementById("salonName"));
+		clearInterval(myVar);
+		document.getElementById('copyButton').innerHTML= "Salon Copié !";
+		
+		copyToClipboard(document.getElementById("salonName"));
+
+		myVar = setInterval( function(){
+			if(test==true)
+				document.getElementById('copyButton').innerHTML= "<b>Copier</b> nom salon dans <i>presse-papier</i>";
+			}
+		,1000);
+		
+		test=true;
 	});
 
+	//	copier presse papier fonction
 	function copyToClipboard(elem) {
 		// create hidden text element, if it doesn't already exist
 		var targetId = "_hiddenCopyText_";

@@ -4,8 +4,8 @@
 	<head>
 		<meta charset="utf-8"/>
 		<title>Vivaldi</title>
-		
-		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link href="css/bootstrap.css" rel="stylesheet">
 		<link href="css/piano.css" rel="stylesheet">
 	</head>
@@ -67,16 +67,26 @@
 	</nav>
 
 	<center>
-		<div style="margin-bottom:80px">
+		<div>
 
 			<div class="jumbotron" style="background-color:#5f4842;color:#DDD">
 
-				<h1>Bienvenue dans Vivaldi</h1>
-				<p>Choisisez le mode qui vous convient pour commencer</p>
+				<h1>Mettez vous en <i>Harmonie</i></h1>
+				<p style="margin-bottom:50px;"><b>Créer</b> ou <b>Rejoigner</b> un <i>Salon Musical</i></p>
 
-				<div>
-					<button id="btnOnline" type="button" class="btn btn-success btn-lg" style="margin:10px">Mode ONLINE</button>
-					<button id="btnOffline" type="button" class="btn btn-danger btn-lg" style="margin:10px">Mode OFFLINE</button>
+				<div class="row">
+					<div class="col-md-3 col-lg-3 col-sm-3 col-xs-2"></div>
+					<div class="col-md-6 col-lg-6 col-sm-6 col-xs-8"  style="border-radius:50px;">
+						<div class="input-group bg-green"  style="border-radius:50px;">
+							<span id="generate" style="cursor:pointer"  class="input-group-addon bg-green">
+								<i id="rotate" class="fa fa-refresh fa-2x" aria-hidden="true"></i>
+							</span>
+								<input id="inputSalon" class="form-control input-lg" type="text" placeholder="Saisissez le nom du Salon">
+							<span id="go" style="cursor:pointer"  class="input-group-addon bg-green">
+								<i class="fa fa-music fa-2x" aria-hidden="true"></i>
+							</span>
+						</div>
+					</div>
 				</div>
 				
 			</div>
@@ -88,6 +98,7 @@
 </html>
 
 <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-rotate.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/piano.js"></script>
 
@@ -99,12 +110,22 @@
 
 <script type="text/javascript">
 
-	$( "#btnOffline" ).click(function() {
-			window.location.href = 'offline.html';
-	});
+  $("#generate").rotate({
+	bind:
+	{
+		click: function(){
+			$("#rotate").rotate({ angle:0,animateTo:360,easing: $.easing.easeInOutExpo })
 
-	$( "#btnOnline" ).click(function() {
-			window.location.href = 'connexion.html';
-	});
+			var rando = "";
+			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+			for(var i = 0; i < 5; i++) {
+				rando += possible.charAt(Math.floor(Math.random() * possible.length));
+			}
+			 $( "input" ).val( "vivaldi-" + rando );
+
+		}
+	}
+});
+
 	
 </script>

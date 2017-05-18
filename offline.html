@@ -4,13 +4,13 @@
 	<head>
 		<meta charset="utf-8"/>
 		<title>Vivaldi</title>
-		
+
 		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 		<link href="css/bootstrap.css" rel="stylesheet">
 		<link href="css/piano.css" rel="stylesheet">
 	</head>
 
-	<body >
+	<body onload="loadData()">
 
 		<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
@@ -66,24 +66,43 @@
 		</div>
 	</nav>
 
-	<center>
-		<div style="margin-bottom:80px">
+		<center>
+		<div class="container row" style="margin-top:100px;margin-bottom:100px;">
 
-			<div class="jumbotron" style="background-color:#5f4842;color:#DDD">
-
-				<h1>Bienvenue dans Vivaldi</h1>
-				<p>Choisisez le mode qui vous convient pour commencer</p>
-
-				<div>
-					<button id="btnOnline" type="button" class="btn btn-success btn-lg" style="margin:10px">Mode ONLINE</button>
-					<button id="btnOffline" type="button" class="btn btn-danger btn-lg" style="margin:10px">Mode OFFLINE</button>
+			<div class="col-sm-12 col-md-8" >
+				<div class="piano">
+					<div class="pianoBody">
+						<div class="octave">
+							<div id="white1" class="key white success"><span class="whiteNoteName">Do</span></div>
+							<div id="white2" class="key white"><span class="whiteNoteName">Mi</span></div>
+							<div id="white3" class="key white"><span class="whiteNoteName">Sol</span></div>
+							<div id="white4" class="key white"><span class="whiteNoteName">Si</span></div>
+							<div class="flats">
+								<div id="black1" class="key black"><span class="blackNoteName">Ré</span></div>
+								<div id="black2" class="key black"><span class="blackNoteName">Fa</span></div>
+								<div id="black3" class="key black"><span class="blackNoteName">La</span></div>
+							</div>
+						</div>
+					</div>
 				</div>
-				
+			</div>
+
+			<div class="col-sm-12 col-md-4" >
+
+				<select id="listeChansons"  class="form-control text-center listeChansons" style="margin:20px auto;">
+					<option value="-1">Sélectionner une Chanson</option>
+				</select>
+
+				<button id="playBtn" type="button" class="btn btn-primary btn-lg btn-block">Jouer</button>
+				<button id="tutoBtn" type="button" class="btn btn-info btn-lg btn-block">Tutoriel</button>
+				<input type="text" id="pianoInput" class="form-control text-center" style="margin:20px auto;" 
+					value="Cliquer Ici pour jouer avec Clavier" readonly>
+
 			</div>
 
 		</div>
-	</center>
-	
+		</center>
+
 	</body>
 </html>
 
@@ -98,13 +117,51 @@
 
 
 <script type="text/javascript">
+	$(document).ready(function() {
+		var oPianoControll = new PianoController();
 
-	$( "#btnOffline" ).click(function() {
-			window.location.href = 'offline.html';
-	});
+		$( "#playBtn" ).click(function() {
+			if(oPianoControll.mode=="play"){
+				demoPlayStop(oPianoControll);
+			}
+			else {
+				demoPlayStart(oPianoControll);
+			}
+		});
 
-	$( "#btnOnline" ).click(function() {
-			window.location.href = 'connexion.html';
+		$( "#tutoBtn" ).click(function() {
+			if(oPianoControll.mode=="tuto") {
+				demoTutoStop(oPianoControll);
+			}
+			else {
+				demoTutoStart(oPianoControll);
+			}
+		});
+
+		$('.key').mousedown(function (evt){
+			oPianoControll.pressPianoBtn(this.id);
+		});
+
+		$( "#pianoInput" ).keypress(function( event ) {
+			oPianoControll.pressPianoKey(event);
+		});
+
+		$( "#pianoInput" ).focus(function() {
+			var styles = {
+				backgroundColor : "#85ff9e",
+				color: "#555"
+			};
+			$("#pianoInput").css( styles );
+			$("#pianoInput").val("Tapez les touches AZERTYU pour Jouer");
+		});
+
+		$( "#pianoInput" ).blur(function() {
+			var styles = {
+				backgroundColor : "#a62639",
+				color: "#CCC"
+			};
+			$("#pianoInput").css( styles );
+			$("#pianoInput").val("Cliquer Ici pour jouer avec Clavier");
+		});
 	});
-	
 </script>

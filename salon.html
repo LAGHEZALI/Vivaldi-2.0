@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Vivaldi</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/piano.css" rel="stylesheet">
+	</head>
+
+	<body style="padding-bottom:90px;" >
+
+		<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 id="modalTitle" class="modal-title"></h4>
+			</div>
+			<div class="modal-body">
+				<p id="modalMsg" class="text-center"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+			</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+		<button id="btn-modal" type="button" style="visibility:hidden" class="btn btn-primary btn-lg" 
+		data-toggle="modal" data-target="#myModal"></button>
+
+		
+	  <nav class="navbar  navbar-inverse  navbar-fixed-top">
+			<div class="container">
+			<button type="button" class="navbar-toggle"
+			data-toggle="collapse"
+			data-target=".navbar-collapse"
+			>
+			<span class="sr-only"> Toggle navigation</span>
+			<span class="icon-bar"> </span>
+			<span class="icon-bar"> </span>
+			<span class="icon-bar"> </span>
+			</button>
+			
+			<a class="navbar-brand" href="index.html" style="text-decoration:none" > &#119070 Vivaldi </a>
+			
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li class=""><a href="https://github.com/LAGHEZALI/Vivaldi" style="text-decoration:none" >Code Source</a> </li>
+					</ul>
+				</div>
+			</div>
+	</nav>
+
+	<nav class="navbar navbar-inverse navbar-fixed-bottom">
+		<div class="container">
+			<div class="navbar-text pull-right">
+				<p style="text-decoration:none">Réalisé Par : 
+						<a href="#" style="text-decoration:none" >LAGHEZALI</a> & 
+						<a href="#" style="text-decoration:none" >ELKAISSI</a>
+				</p>
+			</div>
+		</div>
+	</nav>
+
+	<center>
+		<div>
+
+			<div class="jumbotron" style="background-color:#5f4842;color:#DDD">
+
+				<h1>Salon : <i id="salonName" >vivaldi-2j5d1</i></h1>
+				<p>Bravo <i>Réda</i>! Vous avez crée votre salon</p>
+				<p>Nous sommes en traint d'attende <i>Souhail</i></p>
+
+				<i id="loading" class="fa fa-spinner fa-5x" aria-hidden="true"></i>
+				
+			</div>
+
+			<button id="copyButton" type="button" class="btn btn-success"><b>Copier</b> nom salon dans <i>presse-papier</i></button>
+			
+
+		</div>
+	</center>
+	
+	</body>
+</html>
+
+<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="js/jquery-rotate.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/piano.js"></script>
+
+<script type="text/javascript" src="js/loadData.js"></script>
+<script type="text/javascript" src="js/play.js"></script>
+<script type="text/javascript" src="js/tutoriel.js"></script>
+<script type="text/javascript" src="js/ajax.js"></script>
+
+
+<script type="text/javascript">
+
+	//	rotation loading
+	var rotation = function (){
+	$("#loading").rotate({
+		angle:0, 
+		animateTo:360, 
+		callback: rotation,
+		easing: function (x,t,b,c,d){        // t: current time, b: begInnIng value, c: change In value, d: duration
+			return c*(t/d)+b;
+		}
+	});
+	}
+	rotation();
+
+	//	copier presse-papier
+	document.getElementById("copyButton").addEventListener("click", function() {
+    copyToClipboard(document.getElementById("salonName"));
+	});
+
+	function copyToClipboard(elem) {
+		// create hidden text element, if it doesn't already exist
+		var targetId = "_hiddenCopyText_";
+		var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+		var origSelectionStart, origSelectionEnd;
+		if (isInput) {
+			// can just use the original source element for the selection and copy
+			target = elem;
+			origSelectionStart = elem.selectionStart;
+			origSelectionEnd = elem.selectionEnd;
+		} else {
+			// must use a temporary form element for the selection and copy
+			target = document.getElementById(targetId);
+			if (!target) {
+				var target = document.createElement("textarea");
+				target.style.position = "absolute";
+				target.style.left = "-9999px";
+				target.style.top = "0";
+				target.id = targetId;
+				document.body.appendChild(target);
+			}
+			target.textContent = elem.textContent;
+		}
+		// select the content
+		var currentFocus = document.activeElement;
+		target.focus();
+		target.setSelectionRange(0, target.value.length);
+		
+		// copy the selection
+		var succeed;
+		try {
+			succeed = document.execCommand("copy");
+		} catch(e) {
+			succeed = false;
+		}
+		// restore original focus
+		if (currentFocus && typeof currentFocus.focus === "function") {
+			currentFocus.focus();
+		}
+		
+		if (isInput) {
+			// restore prior selection
+			elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+		} else {
+			// clear temporary content
+			target.textContent = "";
+		}
+		return succeed;
+	}
+
+</script>

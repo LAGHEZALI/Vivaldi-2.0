@@ -121,7 +121,7 @@
 
 		myVar = setInterval( function(){
 			if(test==true)
-				document.getElementById('copyUrl').innerHTML= "Copier <i>salon</i>";
+				document.getElementById('copyUrl').innerHTML= "Copier <i>URL</i>";
 			}
 		,1000);
 		
@@ -151,7 +151,7 @@
 				document.body.appendChild(target);
 			}
 			if(who=="url") {
-				target.textContent = 'http://localhost:5000/salon/'+elem.textContent;
+				target.textContent = window.location.href;
 			}
 			else {
 				target.textContent = elem.textContent;

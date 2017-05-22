@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Vivaldi</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="/assets/css/bootstrap.css" rel="stylesheet">
+		<link href="/assets/css/piano.css" rel="stylesheet">
+	</head>
+
+	<body>
+	<% include header %>
+	<center>
+		<div>
+			<div class="jumbotron" style="background-color:#5f4842;color:#DDD;margin-top:5%;margin-bottom:12%;">
+				<div star class="alert alert-danger alert-autocloseable-danger">
+					Erreur! Vous n'avez rien saisi
+				</div>
+				<h1>Mettez vous en <i>Harmonie</i></h1>
+				<p style="margin-bottom:50px;"><b>Créer</b> ou <b>Rejoigner</b> un <i>Salon Musical</i></p>
+				<div class="row">
+					<div class="col-md-3 col-lg-3 col-sm-3 col-xs-2"></div>
+					<div class="col-md-6 col-lg-6 col-sm-6 col-xs-8"  style="border-radius:50px;">
+						<form action="/connexion" method="post">
+							<div class="input-group bg-green"  style="border-radius:50px;">
+								<span id="generate" style="cursor:pointer"  class="input-group-addon bg-green">
+									<i id="rotate" class="fa fa-refresh fa-2x" aria-hidden="true"></i>
+								</span>
+									<input name="salonName" id="inputSalon" class="form-control input-lg" type="text" placeholder="Saisissez le nom du Salon">
+								<span id="go" style="cursor:pointer"  class="input-group-addon bg-green">
+									<i class="fa fa-music fa-2x" aria-hidden="true"></i>
+								</span>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</center>
+	<% include footer %>
+	</body>
+</html>
+
+<script type="text/javascript" src="/assets/js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery-rotate.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+	$(document).ready(function () {
+		$('.alert-autocloseable-danger').hide();
+		$("#go").click( function () {
+			let x=document.getElementById("inputSalon").value;
+			if(x === '') {
+				$('#autoclosable-btn-danger').prop("disabled", true);
+				$('.alert-autocloseable-danger').show();
+				$('.alert-autocloseable-danger').delay(5000).fadeOut( "slow", function() {
+					$('#autoclosable-btn-danger').prop("disabled", false);
+				});
+			}
+			else {
+				var form = document.forms[0] //assuming only form.
+				form.submit();
+			}
+		});
+
+		$("#generate").rotate({
+			bind:
+			{
+				click: function(){
+					$("#rotate").rotate({ angle:0,animateTo:360,easing: $.easing.easeInOutExpo })
+					var rando = "";
+					var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+					for(var i = 0; i < 5; i++) {
+						rando += possible.charAt(Math.floor(Math.random() * possible.length));
+					}
+					$( "input" ).val( "vivaldi-" + rando );
+				}
+			}
+		});
+
+	});	
+	
+</script>

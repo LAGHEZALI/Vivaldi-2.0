@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Vivaldi</title>
+		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+		<link href="/assets/css/bootstrap.css" rel="stylesheet">
+		<link href="/assets/css/piano.css" rel="stylesheet">
+	</head>
+	<body>
+		<% include header %>
+		<center>
+			<div>
+				<div class="jumbotron" style="background-color:#5f4842;color:#DDD">
+					<h1 style="font-size:10em">404</h1>
+					<p>Erreur ! le salon <i><%= nomSalon %></i> n'éxiste pas</p>
+					<div>
+						<button id="ret" type="button" class="btn btn-success btn-lg" style="margin:10px">Retour Page d'Acceuil</button>
+					</div>
+				</div>
+			</div>
+		</center>
+		<% include footer %>
+	</body>
+</html>
+
+<script type="text/javascript" src="/assets/js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+	$( "#ret" ).click(function() {
+			window.location.href = '/';
+	});
+</script>

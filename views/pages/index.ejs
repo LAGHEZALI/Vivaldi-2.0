@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Vivaldi</title>
+		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+		<link href="/assets/css/bootstrap.css" rel="stylesheet">
+		<link href="/assets/css/piano.css" rel="stylesheet">
+	</head>
+	<body>
+		<% include header %>
+		<center>
+			<div style="margin-bottom:7%;margin-top:7%">
+				<div class="jumbotron" style="background-color:#5f4842;color:#DDD">
+					<h1>Bienvenue dans Vivaldi 2.0</h1>
+					<p>Choisisez le mode qui vous convient pour commencer</p>
+					<div>
+						<button id="btnOnline" type="button" class="btn btn-success btn-lg" style="margin:10px">Mode ONLINE</button>
+						<button id="btnOffline" type="button" class="btn btn-danger btn-lg" style="margin:10px">Mode OFFLINE</button>
+					</div>
+				</div>
+			</div>
+		</center>
+		<% include footer %>
+
+	</body>
+</html>
+
+<script type="text/javascript" src="/assets/js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+
+	$( "#btnOffline" ).click(function() {
+			window.location.href = 'offline';
+	});
+
+	$( "#btnOnline" ).click(function() {
+			window.location.href = 'connexion';
+	});
+	
+</script>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Vivaldi</title>
+
+		<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+		<link href="/assets/css/bootstrap.css" rel="stylesheet">
+		<link href="/assets/css/piano.css" rel="stylesheet">
+	</head>
+	<body>
+		<% include header %>
+		<center>
+			<div class="container row" style="margin-top:100px;margin-bottom:100px;">
+				<div class="col-sm-12 col-md-8" >
+					<div class="piano">
+						<div class="pianoBody">
+							<div class="octave">
+								<div id="white1" class="key white success"><span class="whiteNoteName">Do</span></div>
+								<div id="white2" class="key white"><span class="whiteNoteName">Mi</span></div>
+								<div id="white3" class="key white"><span class="whiteNoteName">Sol</span></div>
+								<div id="white4" class="key white"><span class="whiteNoteName">Si</span></div>
+								<div class="flats">
+									<div id="black1" class="key black"><span class="blackNoteName">Ré</span></div>
+									<div id="black2" class="key black"><span class="blackNoteName">Fa</span></div>
+									<div id="black3" class="key black"><span class="blackNoteName">La</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-4" >
+					<h1 class="bg-info user-div">Salon: <i id="sn"><%= nomSalon %></i></h1>
+					<button id="copySalon" type="button" class="btn btn-info btn xs">Copier <i>Salon</i></button>
+					<button id="copyUrl" type="button" class="btn btn-info btn xs">Copier <i>URL</i>	</button>
+					<h1 id="you" class="bg-success user-div">Vous</h1>
+					<h1 id="someone" class="bg-success user-div">Quelqu'un</h1>
+					<input type="text" id="pianoInput" class="form-control text-center" style="margin:20px auto;" 
+						value="Cliquer Ici pour jouer avec Clavier" readonly>
+				</div>
+			</div>
+		</center>
+		<% include footer %>
+	</body>
+</html>
+
+<script type="text/javascript" src="/assets/js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/piano.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+	var room = $('#sn').text();
+	var socket = io('/salon/'+room);
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var oPianoControll = new PianoController();
+
+		socket.on('emitNote', function(noteId){
+			oPianoControll.pressPianoBtn(noteId,"someone");
+		});
+
+		$('.key').mousedown(function (evt){
+			oPianoControll.pressPianoBtn(this.id,"you");
+			socket.emit('emitNote', this.id);
+		});
+
+		$( "#pianoInput" ).keypress(function( event ) {
+			oPianoControll.pressPianoKey(event,'you');
+
+        	var buttonId =  keyToId(event.key);
+			if(buttonId != 'invalid') {
+				socket.emit('emitNote', buttonId);
+			}
+		});
+
+		$( "#pianoInput" ).focus(function() {
+			var styles = {
+				backgroundColor : "#85ff9e",
+				color: "#555"
+			};
+			$("#pianoInput").css( styles );
+			$("#pianoInput").val("Tapez les touches AZERTYU pour Jouer");
+		});
+
+		$( "#pianoInput" ).blur(function() {
+			var styles = {
+				backgroundColor : "#a62639",
+				color: "#CCC"
+			};
+			$("#pianoInput").css( styles );
+			$("#pianoInput").val("Cliquer Ici pour jouer avec Clavier");
+		});
+	});
+
+	var test=false;
+	var myVar;
+	//	copier Salon presse-papier
+	document.getElementById("copySalon").addEventListener("click", function() {
+		clearInterval(myVar);
+		document.getElementById('copySalon').innerHTML= "Salon Copié !";
+		
+		copyToClipboard(document.getElementById("sn"),"name");
+
+		myVar = setInterval( function(){
+			if(test==true)
+				document.getElementById('copySalon').innerHTML= "Copier <i>salon</i>";
+			}
+		,1000);
+		
+		test=true;
+	});
+	//	copier URL presse-papier
+	document.getElementById("copyUrl").addEventListener("click", function() {
+		clearInterval(myVar);
+		document.getElementById('copyUrl').innerHTML= "URL Copié !";
+		
+		copyToClipboard(document.getElementById("sn"),"url");
+
+		myVar = setInterval( function(){
+			if(test==true)
+				document.getElementById('copyUrl').innerHTML= "Copier <i>salon</i>";
+			}
+		,1000);
+		
+		test=true;
+	});
+
+	//	copier presse papier fonction
+	function copyToClipboard(elem,who) {
+		// create hidden text element, if it doesn't already exist
+		var targetId = "_hiddenCopyText_";
+		var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+		var origSelectionStart, origSelectionEnd;
+		if (isInput) {
+			// can just use the original source element for the selection and copy
+			target = elem;
+			origSelectionStart = elem.selectionStart;
+			origSelectionEnd = elem.selectionEnd;
+		} else {
+			// must use a temporary form element for the selection and copy
+			target = document.getElementById(targetId);
+			if (!target) {
+				var target = document.createElement("textarea");
+				target.style.position = "absolute";
+				target.style.left = "-9999px";
+				target.style.top = "0";
+				target.id = targetId;
+				document.body.appendChild(target);
+			}
+			if(who=="url") {
+				target.textContent = 'http://localhost:5000/salon/'+elem.textContent;
+			}
+			else {
+				target.textContent = elem.textContent;
+			}
+		}
+		// select the content
+		var currentFocus = document.activeElement;
+		target.focus();
+		target.setSelectionRange(0, target.value.length);
+		
+		// copy the selection
+		var succeed;
+		try {
+			succeed = document.execCommand("copy");
+		} catch(e) {
+			succeed = false;
+		}
+		// restore original focus
+		if (currentFocus && typeof currentFocus.focus === "function") {
+			currentFocus.focus();
+		}
+		
+		if (isInput) {
+			// restore prior selection
+			elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+		} else {
+			// clear temporary content
+			target.textContent = "";
+		}
+		return succeed;
+	}
+</script>
